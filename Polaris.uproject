@@ -16,6 +16,10 @@
 	],
 	"Plugins": [
 		{
+			"Name": "ChaosEditor",
+			"Enabled": false
+		},
+		{
 			"Name": "Niagara",
 			"Enabled": true
 		},
@@ -304,6 +308,10 @@
 		{
 			"Name": "GeometryScripting",
 			"Enabled": true
+		},
+		{
+			"Name": "Fracture",
+			"Enabled": false
 		}
 	],
 	"TargetPlatforms": [
