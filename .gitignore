@@ -55,6 +55,9 @@ Plugins/**/Binaries/*
 # Builds
 Build/*
 
+# Window Files
+Windows/*
+
 # Whitelist PakBlacklist-<BuildConfiguration>.txt files
 !Build/*/
 Build/*/**
@@ -75,3 +78,5 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+Windows/Polaris/Content/Paks/global.ucas
+Windows/Polaris/Binaries/Win64/PolarisGame.pdb
