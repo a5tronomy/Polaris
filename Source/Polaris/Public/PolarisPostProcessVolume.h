@@ -1,6 +1,5 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
 #include "Engine/PostProcessVolume.h"
 #include "PolarisPostProcessVolume.generated.h"
 
