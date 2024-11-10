@@ -1,5 +1,7 @@
 .idea/
 .vsconfig
+Windows/
+Platforms/
 
 # Visual Studio user specific files
 .vs/
@@ -75,3 +77,4 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+Config/DefaultInput.ini
