@@ -4,7 +4,7 @@
 #include "Engine/PostProcessVolume.h"
 #include "PolarisPostProcessVolume.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class POLARIS_API APolarisPostProcessVolume : public APostProcessVolume {
     GENERATED_BODY()
 public:
