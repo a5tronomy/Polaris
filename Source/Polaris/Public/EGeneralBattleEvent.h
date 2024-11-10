@@ -2,7 +2,7 @@
 #include "CoreMinimal.h"
 #include "EGeneralBattleEvent.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EGeneralBattleEvent : uint8 {
     None,
     PreStart_1P,
