@@ -63,10 +63,6 @@
 			"Enabled": false
 		},
 		{
-			"Name": "GitSourceControl",
-			"Enabled": false
-		},
-		{
 			"Name": "GoogleCloudMessaging",
 			"Enabled": false
 		},
@@ -317,6 +313,7 @@
 	"TargetPlatforms": [
 		"PS5",
 		"Windows",
-		"XSX"
+		"XSX",
+		"HoloLens"
 	]
 }

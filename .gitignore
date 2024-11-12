@@ -2,6 +2,7 @@
 .vsconfig
 Windows/
 Platforms/
+Plugins/UEGitPlugin/
 
 # Visual Studio user specific files
 .vs/
