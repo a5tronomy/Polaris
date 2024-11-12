@@ -36,7 +36,7 @@ protected:
     USphereComponent* HitCollision;
     
 public:
-    UPROPERTY(BlueprintReadWrite)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     EStageGimmickState State;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
