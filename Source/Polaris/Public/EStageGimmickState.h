@@ -2,7 +2,7 @@
 #include "CoreMinimal.h"
 #include "EStageGimmickState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EStageGimmickState : uint8 {
     Init,
     Main,
