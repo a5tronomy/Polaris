@@ -2,7 +2,7 @@ import json
 import unreal
 import os
 
-file_name = 'ST10_Geom_1a.json'
+file_name = 'ST02_Battle_Program.json'
 
 def IsWall(asset_path) :
     if "Wall" in asset_path:
@@ -368,9 +368,18 @@ def ParsePlayerStarts(data) :
 
 
 stagedata = LoadStageJson(file_name)
+text_label = f"Templating Stage: {file_name}"
 
-with unreal.ScopedEditorTransaction("Parsed Tekken 8 Stage") as trans:
-    ParseWalls(stagedata)
-    ParseBarriers(stagedata)
-    ParsePlayerStarts(stagedata)
-    unreal.log(f"finished parsing {file_name}.")
+with unreal.ScopedSlowTask(3, text_label) as slow_task:
+    slow_task.make_dialog()
+    with unreal.ScopedEditorTransaction("Template Stage") as trans:
+        slow_task.enter_progress_frame(1, "Parsing Walls...")
+        ParseWalls(stagedata)
+
+        slow_task.enter_progress_frame(1, "Parsing Barriers...")
+        ParseBarriers(stagedata)
+
+        slow_task.enter_progress_frame(1, "Parsing Player Start...")
+        ParsePlayerStarts(stagedata)
+
+        unreal.log(f"finished parsing {file_name}.")
