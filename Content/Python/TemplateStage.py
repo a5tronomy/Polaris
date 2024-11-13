@@ -2,7 +2,13 @@ import json
 import unreal
 import os
 
-file_name = 'ST12_Geom_Base_1.json'
+file_name = 'ST10_Geom_1a.json'
+
+def IsWall(asset_path) :
+    if "Wall" in asset_path:
+        return True
+
+    return False
 
 def GetBlueprintClass(blueprintpath) :
     """Returns the class used for a blueprint"""
@@ -56,8 +62,8 @@ def ParseWalls(data) :
         "BP_PolarisWallBreak_C": "/Game/Stage/Common/Blueprints/BP_PolarisWallBreak.BP_PolarisWallBreak",
         "BP_PolarisWallBreakBalcony_C": "/Game/Stage/Common/Blueprints/BP_PolarisWallBreakBalcony.BP_PolarisWallBreakBalcony",
         "PolarisStageFloorActor": "/Script/Polaris.PolarisStageFloorActor",
-        "BP_PolarisFloor_C": "/Game/Stage/Common/Blueprints/BP_PolarisWallBreakBalcony.BP_PolarisWallBreakBalcony",
-        "BP_PolarisFloorBreak_C": "/Game/Stage/Common/Blueprints/BP_PolarisWallBreakBalcony.BP_PolarisWallBreakBalcony",
+        "BP_PolarisFloor_C": "/Game/Stage/Common/Blueprints/BP_PolarisFloor.BP_PolarisFloor",
+        "BP_PolarisFloorBreak_C": "/Game/Stage/Common/Blueprints/BP_PolarisFloorBreak.BP_PolarisFloorBreak",
     }
 
     # Step 1: Find all "BP_PolarisWall_C" objects
@@ -140,7 +146,7 @@ def ParseWalls(data) :
 
             # Set the correct folder depending on if it's a wall or a floor.
             folder_path = None
-            if "Wall" in wall_path:
+            if IsWall(wall_path):
                 folder_path = "Stage/Walls"
             else:
                 folder_path = "Stage/Floors"
@@ -149,8 +155,10 @@ def ParseWalls(data) :
 
             # Set Wall Properties
             spawned_actor.set_editor_property('FloorNo', properties.get("FloorNo", 0))
-            spawned_actor.set_editor_property('WallAttribute', properties.get("WallAttribute", 0))
             spawned_actor.set_editor_property('RelatedStageSequenceId', properties.get("RelatedStageSequenceId", 0))
+
+            if IsWall(wall_path):
+                spawned_actor.set_editor_property('WallAttribute', properties.get("WallAttribute", 0))
 
             # Apply the scale to the actor if needed
             static_mesh_component = spawned_actor.get_component_by_class(unreal.StaticMeshComponent)
@@ -266,8 +274,103 @@ def ParseBarriers(data) :
             else:
                 unreal.log_error(f"Failed to spawn {barrier_name} from Blueprint.")
 
+def ParsePlayerStarts(data) :
+    """Handles the placement of Player Starts."""
+
+    # Step 1: Find all "PolarisBattlePlayerStart" objects
+    polaris_player_starts = {}
+
+    for obj in data:
+        if obj.get("Type") in "PolarisBattlePlayerStart":
+            start_name = obj.get("Name")
+            polaris_player_starts[start_name] = {}  # Store wall names for later reference
+
+            stage_sequence_id = obj.get("Properties", {}).get("StageSequenceId", 0)
+            stage_broken_history = obj.get("Properties", {}).get("StageBrokenHistory", 0)
+            floor_id = obj.get("Properties", {}).get("FloorId", 0)
+            stage_light_type = obj.get("Properties", {}).get("StageLightType")
+
+            unreal.log(f"Player Start Type {stage_light_type} from Blueprint.")
+
+            polaris_player_starts[start_name].update({
+                'StageSequenceId': stage_sequence_id,
+                'StageBrokenHistory': stage_broken_history,
+                'FloorId': floor_id,
+                'StageLightType': stage_light_type,
+            })
+
+    if len(polaris_player_starts) <= 0:
+        return
+
+    # Step 2: Search for "CapsuleComponent" objects linked to the found walls
+    for obj in data:
+        if obj.get("Type") == "CapsuleComponent":
+            outer_name = obj.get("Outer")
+            if outer_name in polaris_player_starts:
+                # Extract properties if they exist
+                relative_location = obj.get("Properties", {}).get("RelativeLocation", {})
+                relative_rotation = obj.get("Properties", {}).get("RelativeRotation", {})
+                relative_scale = obj.get("Properties", {}).get("RelativeScale3D", {})
+
+                # Save the data under the corresponding wall name
+                polaris_player_starts[outer_name].update({
+                    'RelativeLocation': relative_location,
+                    'RelativeRotation': relative_rotation,
+                    'RelativeScale3D': relative_scale
+                })
+
+    # Get the Editor Actor Subsystem
+    editor_subsystem = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
+
+    # Loop through all the walls we've found.
+    for start_name, properties in polaris_player_starts.items():
+        # Extract the location, rotation, and scale from the JSON data
+        location = properties.get("RelativeLocation", {})
+        rotation = properties.get("RelativeRotation", {})
+        scale = properties.get("RelativeScale3D", {})
+
+        # Define spawn location, rotation, and scale
+        spawn_location = unreal.Vector(location.get("X", 0), location.get("Y", 0), location.get("Z", 0))
+        spawn_rotation = unreal.Rotator(rotation.get("Roll", 0), rotation.get("Pitch", 0), rotation.get("Yaw", 0))
+        spawn_scale = unreal.Vector(scale.get("X", 1), scale.get("Y", 1), scale.get("Z", 1))
+
+        actor_class = unreal.load_class(None, "/Script/Polaris.PolarisBattlePlayerStart")
+
+        # Spawn the actor using the loaded Blueprint class
+        spawned_actor = editor_subsystem.spawn_actor_from_class(
+            actor_class,
+            spawn_location,
+            spawn_rotation
+        )
+
+        # Check if the actor was spawned successfully
+        if spawned_actor:
+            # Set a custom name for the spawned actor
+            spawned_actor.set_actor_label(start_name)
+            spawned_actor.set_folder_path("Stage/PlayerStarts")
+
+            # Set Player Start Properties
+            spawned_actor.set_editor_property('StageSequenceId', properties.get("StageSequenceId", 0))
+            spawned_actor.set_editor_property('StageBrokenHistory', properties.get("StageBrokenHistory", 0))
+            spawned_actor.set_editor_property('FloorId', properties.get("FloorId", 0))
+
+            # TODO: Convert the JSON string Enum into an actual Enum, to then be used for the editor.
+
+            # Apply the scale to the actor if needed
+            root_component = spawned_actor.get_component_by_class(unreal.CapsuleComponent)
+            if root_component:
+                root_component.set_world_scale3d(spawn_scale)
+
+            unreal.log(f"{start_name} spawned successfully with location, rotation, and scale!")
+        else:
+            unreal.log_error(f"Failed to spawn {start_name} from Blueprint.")
+
+
 
 stagedata = LoadStageJson(file_name)
 
-ParseWalls(stagedata)
-ParseBarriers(stagedata)
+with unreal.ScopedEditorTransaction("Parsed Tekken 8 Stage") as trans:
+    ParseWalls(stagedata)
+    ParseBarriers(stagedata)
+    ParsePlayerStarts(stagedata)
+    unreal.log(f"finished parsing {file_name}.")
