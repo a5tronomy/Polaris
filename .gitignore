@@ -76,6 +76,9 @@ Saved/*
 Intermediate/*
 Plugins/**/Intermediate/*
 
+# Ignore all .json files inside Content/Python
+Content/Python/*.json
+
 # Cache files for the editor to use
 DerivedDataCache/*
 Windows/Polaris/Content/Paks/global.ucas
