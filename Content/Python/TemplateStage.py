@@ -2,7 +2,7 @@ import json
 import unreal
 import os
 
-file_name = 'ST02_Battle_Program.json'
+file_name = 'ST01_Geom_Base_1.json'
 
 def IsWall(asset_path) :
     if "Wall" in asset_path:
