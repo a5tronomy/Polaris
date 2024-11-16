@@ -9,72 +9,72 @@ UCLASS(Abstract)
 class POLARIS_API APolarisStageGimmickBaseActor : public AActor {
     GENERATED_BODY()
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     EStageGimmickState State;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     int32 FloorNo;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     int32 RelatedStageSequenceId;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     float ImpluseStrengthS_Threshold;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     bool IsTakeWallHit;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     bool IsTakeFloorHit;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     bool IsTakeForceLowerFloorHit;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     bool IsTakeForceUpperFloorHit;
     
-    UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "StageGimmickBase")
     bool IsDurableBreakFlag;
     
-    UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "StageGimmickBase")
     bool IsOwnerGroundActorFlag;
     
-    UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "StageGimmickBase")
     bool IsKamuiActor;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     bool IsCollisionBattle;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     bool IsCollisionSystem;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     bool IsHiddenBattle;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     bool IsHiddenSystem;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickBase")
     bool IsHiddenCullBack;
     
     APolarisStageGimmickBaseActor(const FObjectInitializer& ObjectInitializer);
 
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable, Category = "StageGimmickBase")
     void SetVisibleCullBack(bool Status);
     
-    UFUNCTION(BlueprintImplementableEvent)
+    UFUNCTION(BlueprintImplementableEvent, Category = "StageGimmickBase")
     void OnWallHitSBlueprint(FVector HitLocation, float Damage);
     
-    UFUNCTION(BlueprintImplementableEvent)
+    UFUNCTION(BlueprintImplementableEvent, Category = "StageGimmickBase")
     void OnStopBehaviorBlueprint();
     
-    UFUNCTION(BlueprintImplementableEvent)
+    UFUNCTION(BlueprintImplementableEvent, Category = "StageGimmickBase")
     void OnResetBlueprint();
     
-    UFUNCTION(BlueprintImplementableEvent)
+    UFUNCTION(BlueprintImplementableEvent, Category = "StageGimmickBase")
     void OnInitBlueprint();
     
-    UFUNCTION(BlueprintPure)
+    UFUNCTION(BlueprintPure, Category = "StageGimmickBase")
     bool IsPlayerDown(int32 player_id) const;
     
 };

@@ -7,16 +7,16 @@ UCLASS()
 class POLARIS_API APolarisStageFloorActor : public APolarisStageGroundActor {
     GENERATED_BODY()
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageFloor")
     bool IsFloorBreakable;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageFloor")
     bool IsStageDestruction;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageFloor")
     bool IsDummyBreak;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageFloor")
     bool IsFloorBlast;
     
     APolarisStageFloorActor(const FObjectInitializer& ObjectInitializer);

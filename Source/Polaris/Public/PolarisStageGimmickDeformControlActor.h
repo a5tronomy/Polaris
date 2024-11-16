@@ -23,58 +23,58 @@ UCLASS()
 class POLARIS_API APolarisStageGimmickDeformControlActor : public APolarisStageGimmickBaseActor {
     GENERATED_BODY()
 public:
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickDeformControl")
     UBoxComponent* BoxCollisionComponent;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     bool IsTakeDamage;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     TArray<FPolarisStageGimmicDeformMesh> MeshArray;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> MeshEffectHandles;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     TArray<FPolarisStageGimmicDeformGimmikMesh> GimmickArray;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> GimmickEffectHandles;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     TArray<AStaticMeshActor*> FloorDecalMeshes;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     TArray<APolarisStageGimmickActor*> StartPhysicsMeshs;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     float DestructDelayMaxTime;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     float WeightDamageMul;
     
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickDeformControl")
     TArray<UPolarisColorBlendComponent*> PolarisColorBlendComponents;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     bool IsVanish;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     float VanishingStartSecond;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     float VanishingEndSecond;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     bool IsVanishingDisableBarrier;
     
     UPROPERTY()
     int32 LastImpulseStrengthType;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
     TSubclassOf<APolarisDestructibleNiagaraActor> DestructibleNiagaraActorClass;
     
-    UPROPERTY(VisibleAnywhere)
+    UPROPERTY(VisibleAnywhere, Category = "StageGimmickDeformControl")
     TArray<APolarisDestructibleNiagaraActor*> PolarisDestructibleNiagaraActors;
     
     APolarisStageGimmickDeformControlActor(const FObjectInitializer& ObjectInitializer);
