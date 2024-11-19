@@ -1,13 +1,36 @@
 import json
 import unreal
 import os
+import re
 
-file_name = 'ST11_Geom_Base_1.json'
+files_to_template = [
+    "ST03_Effect_1a",
+    "ST03_Geom_1a",
+    "ST03_Geom_Base_1",
+    "ST03_Light_3",
+    "ST03_Mob_1",
+    "ST03_Program",
+    "ST03_Sound",
+    "ST03_StageEffect_1a"
+]
+
+additional_name_suffix = "Python"
+
 
 def is_wall(asset_path) :
     if "Wall" in asset_path:
         return True
     return False
+
+def test_print_start(player_start):
+    spawned_actor = find_actor_by_name(player_start)
+    if spawned_actor:
+        stage_light = spawned_actor.get_editor_property("StageLightType")
+        unreal.log(f"Found EStageLightType is {stage_light}")
+
+def set_editor_property_in_struct(spawned_actor, property_value, struct_name, inner_struct_name):
+    parameter = spawned_actor.get_editor_property(struct_name)
+    parameter.set_editor_property(inner_struct_name, property_value)
 
 def is_reference(asset_path) :
     if "PersistentLevel" in asset_path:
@@ -59,7 +82,7 @@ def generic_loop_and_append(spawned_actor, properties, property_name):
             unreal.log(
                 f"Added {reference} as a reference to {spawned_actor.get_actor_label()})")
 
-def extract_properties_from_list(stage_data, target_types, properties):
+def extract_properties_from_list(stage_data, target_types, base_properties):
     new_polaris_list = {}
 
     for obj in stage_data:
@@ -70,30 +93,33 @@ def extract_properties_from_list(stage_data, target_types, properties):
 
             new_polaris_list[start_name]["Type"] = obj.get("Type")
 
+            # Exception Handlers, should be done in their own specific functions as extra code.
             # Extract and update properties based on the provided defaults
-            for prop, default in properties.items():
+            for prop, default in base_properties.items():
                 new_polaris_list[start_name][prop] = obj.get("Properties", {}).get(prop, default)
 
             # Temporary code for collecting HitForceParameters
             radial_force_damage = obj.get("Properties", {}).get("HitForceParam", {}).get("RadialForceDamage", 0)
             new_polaris_list[start_name]["RadialForceDamage"] = radial_force_damage
 
+            # Temporary code for collecting BreakForceParameters
+            force_strength = obj.get("Properties", {}).get("BreakForceParam", {}).get("ForceStrength", 0)
+            new_polaris_list[start_name]["ForceStrength"] = force_strength
+
             # Temporary code for collecting Array Gimmicks.
             extra_generic_array_from_list(new_polaris_list, start_name, obj, "StageGimmick_DeformControls")
             extra_generic_array_from_list(new_polaris_list, start_name, obj, "HitForces")
             extra_generic_array_from_list(new_polaris_list, start_name, obj, "HitForcesPolaris")
-            '''
-            polaris_array = []
-            extracted_array = obj.get("Properties", {}).get("StageGimmick_DeformControls", [])
 
-            for extracted_entry in extracted_array:
-                entry = extracted_entry.get("ObjectName")
-                unreal.log(f"{entry} referenced in {start_name}")
-                polaris_array.append(entry)
+            # Temporary code for Stage Light Type Enum.
+            stage_light_type = obj.get("Properties").get("StageLightType", "EStageLightType::Term")
+            new_polaris_list[start_name]["StageLightType"] = stage_light_type
 
-            # Store the extracted data in the dictionary
-            new_polaris_list[start_name]["StageGimmick_DeformControls"] = polaris_array
-            '''
+            # Temporary code for Stage Position Type ID.
+            position_type_id = obj.get("Properties").get("StagePositionTypeId", "EStagePositionTypeId::GameStart")
+            new_polaris_list[start_name]["StagePositionTypeId"] = position_type_id
+
+            unreal.log(f"Found position type {position_type_id}")
 
 
     return new_polaris_list
@@ -221,6 +247,17 @@ def parse_key_actors(data) :
     parse_radial_force_actor(data)
 
 
+def quick_parse_asset(data, properties_defaults, type_class, class_path, root_component, folder_path):
+    # Automated quick parse for extra items that don't need much changes from the standard configuration.
+    polaris_asset = extract_properties_from_list(data, type_class, properties_defaults)
+
+    if len(polaris_asset) <= 0:
+        return
+
+    add_transforms_to_actor_list(data, root_component, polaris_asset)
+    create_objects_from_list(polaris_asset, properties_defaults, folder_path, class_path)
+
+
 def parse_gimmick_controller(data) :
     """Handles spawning Gimmick Controllers, Radial Force"""
     properties_defaults = {
@@ -321,6 +358,12 @@ def parse_walls(data) :
         "RelatedStageSequenceId": 0,
         "IsNextStageSequence": True,
         "IsDurable": True,
+        "IsStageDestruction": False,
+        "WallDamageId": 0,
+        "IsFloorBreakable": False,
+        "IsDummyBreak": False,
+        "IsFloorBlast": False,
+        "HitInterval": 30,
     }
 
     polaris_walls = extract_properties_from_list(data, supported_walls, additional_properties)
@@ -342,10 +385,11 @@ def parse_walls(data) :
 
         if spawned_actor:
             # Update Radial Force Damage Amount
-            radial_force_damage = properties.get("RadialForceDamage", 0)
-            parameter = spawned_actor.get_editor_property("BreakForceParam")
+            radial_force_damage = properties.get("RadialForceDamage")
+            set_editor_property_in_struct(spawned_actor, radial_force_damage, "HitForceParam", "RadialForceDamage")
 
-            parameter.set_editor_property('RadialForceDamage', radial_force_damage)
+            force_strength = properties.get("ForceStrength")
+            set_editor_property_in_struct(spawned_actor, force_strength, "BreakForceParam", "ForceStrength")
 
             # Add Radial Force References
             generic_loop_and_append(spawned_actor, properties, "HitForces")
@@ -353,93 +397,36 @@ def parse_walls(data) :
 
             # Add Gimmick References
             generic_loop_and_append(spawned_actor, properties, "StageGimmick_DeformControls")
-            '''
-            gimmick_deforms = properties.get("StageGimmick_DeformControls", [])
 
-            for gimmick_ref in gimmick_deforms:
-                reference = get_reference_name(gimmick_ref)
+            # Spawns a cube in place of the actor.
+            # Get the system to control the actors
+            editor_actor_subs = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
 
-                unreal.log(f"Searching for {reference}...")
-                found_actor = find_actor_by_name(reference)
-                if found_actor:
-                    unreal.log("Actor was found and located to reference!")
+            # Generate a world space position (0, 0, 0)
+            location = properties.get("RelativeLocation", {})
+            rotation = properties.get("RelativeRotation", {})
+            scale = properties.get("RelativeScale3D", {})
 
-                    deform_controls_ref = spawned_actor.get_editor_property("StageGimmick_DeformControls")
-                    deform_controls_ref.append(found_actor)
+            # Define spawn location, rotation, and scale
+            spawn_location = unreal.Vector(location.get("X", 0), location.get("Y", 0), location.get("Z", 0))
+            spawn_rotation = unreal.Rotator(rotation.get("Roll", 0), rotation.get("Pitch", 0), rotation.get("Yaw", 0))
+            spawn_scale = unreal.Vector(scale.get("X", 1), scale.get("Y", 1), scale.get("Z", 1))
 
-                    unreal.log(
-                        f"Added {reference} as a reference to {spawned_actor})")
-            '''
+            # We want to create a StaticMeshActor
+            actor_class = unreal.StaticMeshActor
 
+            # Place it in the level
+            static_mesh_actor = editor_actor_subs.spawn_actor_from_class(actor_class, spawn_location, spawn_rotation)
+            static_mesh_actor.set_actor_label(f"SM_{new_object}")
+            static_mesh_actor.set_folder_path("Stage/BasicShapes")
 
+            # Load and add the cube to it
+            static_mesh = unreal.EditorAssetLibrary.load_asset("/Engine/BasicShapes/Cube.Cube")
+            static_mesh_actor.static_mesh_component.set_static_mesh(static_mesh)
 
-
-    """
-    # Get the Editor Actor Subsystem
-    editor_subsystem = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
-
-    # Loop through all the walls we've found.
-    for wall_name, properties in polaris_walls.items():
-        # Extract the location, rotation, and scale from the JSON data
-        location = properties.get("RelativeLocation", {})
-        rotation = properties.get("RelativeRotation", {})
-        scale = properties.get("RelativeScale3D", {})
-
-        # Get the associated class with the associated wall.
-        wall_type = properties.get("Type")
-        wall_path = supported_walls[wall_type]
-
-        # Get the appropiate Actor Class, and adjust how we collect it depending on if it's a Blueprint or a C++ class.
-        actor_class = None
-        if wall_path.startswith("/Game"):
-            actor_class = get_blueprint_class(wall_path)
-        else:
-            actor_class = unreal.load_class(None, wall_path)
-
-        # Define spawn location, rotation, and scale
-        spawn_location = unreal.Vector(location.get("X", 0), location.get("Y", 0), location.get("Z", 0))
-        spawn_rotation = unreal.Rotator(rotation.get("Roll", 0), rotation.get("Pitch", 0), rotation.get("Yaw", 0))
-        spawn_scale = unreal.Vector(scale.get("X", 1), scale.get("Y", 1), scale.get("Z", 1))
-
-        # Spawn the actor using the loaded Blueprint class
-        spawned_actor = editor_subsystem.spawn_actor_from_class(
-            actor_class,
-            spawn_location,
-            spawn_rotation
-        )
-
-        # Check if the actor was spawned successfully
-        if spawned_actor:
-            # Set a custom name for the spawned actor
-            spawned_actor.set_actor_label(wall_name)
-
-            # Set the correct folder depending on if it's a wall or a floor.
-            folder_path = None
-            if is_wall(wall_path):
-                folder_path = "Stage/Walls"
-            else:
-                folder_path = "Stage/Floors"
-
-            spawned_actor.set_folder_path(folder_path)
-
-            # Set Wall Properties
-            spawned_actor.set_editor_property('FloorNo', properties.get("FloorNo", 0))
-            spawned_actor.set_editor_property('RelatedStageSequenceId', properties.get("RelatedStageSequenceId", 0))
-            spawned_actor.set_editor_property('IsNextStageSequence', properties.get("IsNextStageSequence", True))
-            spawned_actor.set_editor_property('IsDurable', properties.get("IsDurable", True))
-
-            if is_wall(wall_path):
-                spawned_actor.set_editor_property('WallAttribute', properties.get("WallAttribute", 0))
-
-            # Apply the scale to the actor if needed
-            static_mesh_component = spawned_actor.get_component_by_class(unreal.StaticMeshComponent)
-            if static_mesh_component:
-                static_mesh_component.set_world_scale3d(spawn_scale)
-
-            unreal.log(f"{wall_name} spawned successfully with location, rotation, and scale!")
-        else:
-            unreal.log_error(f"Failed to spawn {wall_name} from Blueprint.")
-    """
+            root_component = static_mesh_actor.root_component
+            if root_component:
+                root_component.set_world_scale3d(spawn_scale)
 
 
 def parse_barriers(data) :
@@ -550,133 +537,163 @@ def parse_barriers(data) :
 
 def parse_player_starts(data) :
     """Handles the placement of Player Starts."""
-    properties_defaults = {
+    additional_properties = {
         "StageSequenceId": 0,
         "StageBrokenHistory": 0,
         "FloorId": 0,
     }
 
-    polaris_player_starts = extract_properties_from_list(data, "PolarisBattlePlayerStart", properties_defaults)
+    polaris_player_starts = extract_properties_from_list(data, "PolarisBattlePlayerStart", additional_properties)
 
     if len(polaris_player_starts) <= 0:
         return
 
     add_transforms_to_actor_list(data, "CapsuleComponent", polaris_player_starts)
-    create_objects_from_list(polaris_player_starts, properties_defaults, "Stages/Starts", "/Script/Polaris.PolarisBattlePlayerStart")
 
-    """
-    # Step 1: Find all "PolarisBattlePlayerStart" objects
-    polaris_player_starts = {}
+    for new_object, properties in polaris_player_starts.items():
+        spawned_actor = create_object(new_object, properties, additional_properties, "Stages/Starts", "/Script/Polaris.PolarisBattlePlayerStart")
+        if spawned_actor:
+            stage_light = properties.get("StageLightType")
+            formatted_light = format_enum(stage_light, unreal.StageLightType)
 
-    for obj in data:
-        if obj.get("Type") in "PolarisBattlePlayerStart":
-            start_name = obj.get("Name")
-            polaris_player_starts[start_name] = {}  # Store wall names for later reference
+            unreal.log(f"Formatted string from {stage_light} to {formatted_light}")
 
-            stage_sequence_id = obj.get("Properties", {}).get("StageSequenceId", 0)
-            stage_broken_history = obj.get("Properties", {}).get("StageBrokenHistory", 0)
-            floor_id = obj.get("Properties", {}).get("FloorId", 0)
-            stage_light_type = obj.get("Properties", {}).get("StageLightType")
+            spawned_actor.set_editor_property("StageLightType", formatted_light)
 
-            unreal.log(f"Player Start Type {stage_light_type} from Blueprint.")
+            position_type_id = properties.get("StagePositionTypeId")
+            formatted_position_type_id = format_enum(position_type_id, unreal.StagePositionTypeId)
 
-            polaris_player_starts[start_name].update({
-                'StageSequenceId': stage_sequence_id,
-                'StageBrokenHistory': stage_broken_history,
-                'FloorId': floor_id,
-                'StageLightType': stage_light_type,
-            })
+            unreal.log(f"Formatted string from {position_type_id} to {formatted_position_type_id}")
+
+            spawned_actor.set_editor_property("StagePositionTypeId", formatted_position_type_id)
+
+def parse_volume_collisions(data) :
+    """Handles the placement of Player Starts."""
+    additional_properties = {
+        "StageSequenceId": 0,
+        "StageBrokenHistory": 0,
+        "FloorId": 0,
+    }
+
+    polaris_player_starts = extract_properties_from_list(data, "PolarisBattlePlayerStart", additional_properties)
 
     if len(polaris_player_starts) <= 0:
         return
 
-    # Step 2: Search for "CapsuleComponent" objects linked to the found walls
-    for obj in data:
-        if obj.get("Type") == "CapsuleComponent":
-            outer_name = obj.get("Outer")
-            if outer_name in polaris_player_starts:
-                # Extract properties if they exist
-                relative_location = obj.get("Properties", {}).get("RelativeLocation", {})
-                relative_rotation = obj.get("Properties", {}).get("RelativeRotation", {})
-                relative_scale = obj.get("Properties", {}).get("RelativeScale3D", {})
+    add_transforms_to_actor_list(data, "CapsuleComponent", polaris_player_starts)
 
-                # Save the data under the corresponding wall name
-                polaris_player_starts[outer_name].update({
-                    'RelativeLocation': relative_location,
-                    'RelativeRotation': relative_rotation,
-                    'RelativeScale3D': relative_scale
-                })
-
-    # Get the Editor Actor Subsystem
-    editor_subsystem = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
-
-    # Loop through all the walls we've found.
-    for start_name, properties in polaris_player_starts.items():
-        # Extract the location, rotation, and scale from the JSON data
-        location = properties.get("RelativeLocation", {})
-        rotation = properties.get("RelativeRotation", {})
-        scale = properties.get("RelativeScale3D", {})
-
-        # Define spawn location, rotation, and scale
-        spawn_location = unreal.Vector(location.get("X", 0), location.get("Y", 0), location.get("Z", 0))
-        spawn_rotation = unreal.Rotator(rotation.get("Roll", 0), rotation.get("Pitch", 0), rotation.get("Yaw", 0))
-        spawn_scale = unreal.Vector(scale.get("X", 1), scale.get("Y", 1), scale.get("Z", 1))
-
-        actor_class = unreal.load_class(None, "/Script/Polaris.PolarisBattlePlayerStart")
-
-        # Spawn the actor using the loaded Blueprint class
-        spawned_actor = editor_subsystem.spawn_actor_from_class(
-            actor_class,
-            spawn_location,
-            spawn_rotation
-        )
-
-        # Check if the actor was spawned successfully
+    for new_object, properties in polaris_player_starts.items():
+        spawned_actor = create_object(new_object, properties, additional_properties, "Stages/Starts", "/Script/Polaris.PolarisBattlePlayerStart")
         if spawned_actor:
-            # Set a custom name for the spawned actor
-            spawned_actor.set_actor_label(start_name)
-            spawned_actor.set_folder_path("Stage/PlayerStarts")
+            stage_light = properties.get("StageLightType")
+            formatted_light = format_enum(stage_light, unreal.StageLightType)
 
-            # Set Player Start Properties
-            spawned_actor.set_editor_property('StageSequenceId', properties.get("StageSequenceId", 0))
-            spawned_actor.set_editor_property('StageBrokenHistory', properties.get("StageBrokenHistory", 0))
-            spawned_actor.set_editor_property('FloorId', properties.get("FloorId", 0))
+            unreal.log(f"Formatted string from {stage_light} to {formatted_light}")
 
-            # TODO: Convert the JSON string Enum into an actual Enum, to then be used for the editor.
+            spawned_actor.set_editor_property("StageLightType", formatted_light)
 
-            # Apply the scale to the actor if needed
-            root_component = spawned_actor.get_component_by_class(unreal.CapsuleComponent)
-            if root_component:
-                root_component.set_world_scale3d(spawn_scale)
+            position_type_id = properties.get("StagePositionTypeId")
+            formatted_position_type_id = format_enum(position_type_id, unreal.StagePositionTypeId)
 
-            unreal.log(f"{start_name} spawned successfully with location, rotation, and scale!")
-        else:
-            unreal.log_error(f"Failed to spawn {start_name} from Blueprint.")
-    """
+            unreal.log(f"Formatted string from {position_type_id} to {formatted_position_type_id}")
+
+            spawned_actor.set_editor_property("StagePositionTypeId", formatted_position_type_id)
 
 
+def parse_extra(data):
+    # Parses some extra actors.
+    quick_parse_asset(par)
 
-stagedata = load_stage_json(file_name)
-text_label = f"Templating Stage: {file_name}"
+def format_enum(input_string, enum_type):
+    # Step 1: Extract the part after "EStageLightType::"
+    if "::" in input_string:
+        extracted_part = input_string.split("::")[1]
+    else:
+        extracted_part = input_string
 
-with unreal.ScopedSlowTask(4, text_label) as slow_task:
-    slow_task.make_dialog()
-    with unreal.ScopedEditorTransaction("Template Stage") as trans:
+    # Step 2: Insert an underscore before each uppercase letter that follows a lowercase letter
+    formatted_string = re.sub(r'(?<=[a-z])([A-Z])', r'_\1', extracted_part)
 
-        unreal.log("Beginning Parsing of Key Actors...")
-        slow_task.enter_progress_frame(1, "Parsing Key Actors...")
-        parse_key_actors(stagedata)
+    # Step 3: Convert to uppercase
+    formatted_string = formatted_string.upper()
 
-        unreal.log("Beginning Parsing of Walls...")
-        slow_task.enter_progress_frame(1, "Parsing Walls...")
-        parse_walls(stagedata)
+    # Convert the formatted string to the corresponding enum value
+    enum_value = getattr(enum_type, formatted_string, None)
 
-        unreal.log("Beginning Parsing of Barriers...")
-        slow_task.enter_progress_frame(1, "Parsing Barriers...")
-        parse_barriers(stagedata)
+    return enum_value
 
-        unreal.log("Beginning Parsing of Player Starts...")
-        slow_task.enter_progress_frame(1, "Parsing Player Start...")
-        parse_player_starts(stagedata)
+def does_path_include_temp(package_path):
+    if "temp" in package_path.lower():
+        print("The path includes 'temp'.")
 
-        unreal.log(f"finished parsing {file_name}.")
+def create_sublevel(level_name, root_level, streaming_class=unreal.LevelStreamingAlwaysLoaded):
+    package_path = root_level.get_outermost().get_name()
+    parent_path = os.path.dirname(package_path) + '/'
+
+    if "temp" in package_path.lower():
+        parent_path = "/Game/Stage/Temp/"
+
+    unreal.log(f"Current path is: {parent_path}")
+
+    return unreal.EditorLevelUtils.create_new_streaming_level(streaming_class, f"{parent_path}Sublevels/{level_name}")
+
+def create_sublevel_by_path(level_path, streaming_class=unreal.LevelStreamingAlwaysLoaded):
+    return unreal.EditorLevelUtils.create_new_streaming_level(streaming_class, level_path)
+
+def get_persistent_level():
+    level_subsystem = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
+    current_level = level_subsystem.get_current_level()
+
+    unreal.log(f"Current Root Level is {current_level.get_outermost().get_name()}")
+    return current_level
+
+def main():
+
+    root_level = get_persistent_level()
+    # Main function that handles the templating of the stage.
+    template_steps = 4 # The amount of steps taken to template a stage. Used for Unreal ScopedSlowTask loading bar.
+    with unreal.ScopedSlowTask(len(files_to_template) * template_steps, "Templating Stages") as slow_task:
+        slow_task.make_dialog()
+        for current_file in files_to_template:
+            # Load Map data from FModel .json
+            stage_data = load_stage_json(f"{current_file}.json")
+            map_name = f"{current_file.removesuffix('.json')}"
+
+            # Create a new sublevel and set it as the current
+            loaded_actor = create_sublevel(map_name, root_level)
+            unreal.EditorLevelUtils.make_level_current(loaded_actor)
+
+            # Parse Stage Data
+            with unreal.ScopedEditorTransaction(f"Template {map_name}") as trans:
+                unreal.log(f"Parsing {map_name}")
+                slow_task.enter_progress_frame(1, f"Parsing Key Actors from {map_name}")
+                parse_key_actors(stage_data)
+
+                unreal.log("Beginning Parsing of Walls...")
+                slow_task.enter_progress_frame(1, f"Parsing Walls from {map_name}")
+                parse_walls(stage_data)
+
+                unreal.log("Beginning Parsing of Barriers...")
+                slow_task.enter_progress_frame(1, f"Parsing Barriers from {map_name}")
+                parse_barriers(stage_data)
+
+                unreal.log("Beginning Parsing of Player Starts...")
+                slow_task.enter_progress_frame(1, f"Parsing Player Start from {map_name}")
+                parse_player_starts(stage_data)
+
+                unreal.log(f"finished parsing {map_name}.")
+
+        root_level_name = os.path.basename(root_level.get_outermost().get_name())
+
+        create_sublevel_by_path("/Game/Stage/Common/SubLevels/ST_CommonUtil")
+        create_sublevel_by_path("/Game/Stage/Common/SubLevels/ST_CommonBattle")
+
+        level_subsystem = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
+        level_subsystem.set_current_level_by_name(root_level_name)
+        unreal.log("All inputted stages have been attempted to be parsed!")
+
+# create_sublevel("STPython_Test")
+main()
+
+# create_sublevel_by_path("/Game/Stage/Common/SubLevels/ST_CommonUtil")
+
