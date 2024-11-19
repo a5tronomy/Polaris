@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{3F678FFE-4D7D-B62D-C6B7-7DB6C26BA9B3}",
+	"EngineAssociation": "{0819801F-438B-9C2C-37EF-A781E4FB7E9C}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -11,6 +11,14 @@
 			"AdditionalDependencies": [
 				"Engine",
 				"CoreUObject"
+			]
+		},
+		{
+			"Name": "PolarisEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"UnrealEd"
 			]
 		}
 	],

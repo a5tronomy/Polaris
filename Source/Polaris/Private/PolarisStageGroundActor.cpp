@@ -27,6 +27,18 @@ APolarisStageGroundActor::APolarisStageGroundActor(const FObjectInitializer& Obj
     this->BalconyMidResetPoint = NULL;
     this->BreakSound = NULL;
     this->HitCollision->SetupAttachment(RootComponent);
+
+    UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(GetRootComponent());
+    const ConstructorHelpers::FObjectFinder<UStaticMesh> MeshObj(TEXT("/Script/Engine.StaticMesh'/Game/Stage/Common/Components/SM_CommonBox.SM_CommonBox'"));
+
+    const ConstructorHelpers::FObjectFinder<UMaterial> MeshMat(TEXT("/Script/Engine.Material'/Game/Stage/Common/Components/M_Collision.M_Collision'"));
+
+    if (StaticMeshComponent && MeshObj.Object)
+    {
+        StaticMeshComponent->SetStaticMesh(MeshObj.Object);
+        StaticMeshComponent->SetMaterial(0, MeshMat.Object);
+        StaticMeshComponent->SetHiddenInGame(true);
+    }
 }
 
 void APolarisStageGroundActor::UpdateStageSequenceVisibility(int32 StageSequenceId, bool is_hidden, bool is_update_gimmick) {

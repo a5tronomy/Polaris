@@ -1,8 +1,5 @@
 .idea/
 .vsconfig
-Windows/
-Platforms/
-Plugins/UEGitPlugin/
 
 # Visual Studio user specific files
 .vs/
@@ -58,6 +55,9 @@ Plugins/**/Binaries/*
 # Builds
 Build/*
 
+# Window Files
+Windows/*
+
 # Whitelist PakBlacklist-<BuildConfiguration>.txt files
 !Build/*/
 Build/*/**
@@ -76,6 +76,14 @@ Saved/*
 Intermediate/*
 Plugins/**/Intermediate/*
 
+# Ignore all .json files inside Content/Python
+Content/Python/*.json
+
 # Cache files for the editor to use
 DerivedDataCache/*
-Config/DefaultInput.ini
+Windows/Polaris/Content/Paks/global.ucas
+Windows/Polaris/Binaries/Win64/PolarisGame.pdb
+/Plugins/NoGit
+/Content/BigStarStation
+/Content/MedievalCastle
+/Content/OldCathedral

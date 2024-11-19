@@ -36,210 +36,210 @@ protected:
     USphereComponent* HitCollision;
     
 public:
-    UPROPERTY(BlueprintReadWrite, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     EStageGimmickState State;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     int32 SetNo;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     int32 FloorNo;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     int32 RelatedStageSequenceId;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     EStageLightType RelatedStageLightType;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     bool IsNextStageSequence;
     
-    UPROPERTY(BlueprintReadWrite, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite)
     bool TKCollisionEnable;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     int32 WallDamageId;
     
-    UPROPERTY(BlueprintReadWrite, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite)
     int32 TotalDamage;
     
-    UPROPERTY(EditAnywhere, Category = "StageGround")
+    UPROPERTY(EditAnywhere)
     bool IsDurable;
     
-    UPROPERTY(BlueprintReadWrite, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite)
     int32 DestructLevel;
     
-    UPROPERTY(EditAnywhere, Instanced, Category = "StageGround")
+    UPROPERTY(EditAnywhere, Instanced)
     TArray<UBoxComponent*> ExtraTKCollisions;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<FPolarisStageHitAnimationMesh> HitAnimationMeshes;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<FPolarisStageHitAnimationMesh> HitAnimationMeshesOnce;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     FPolarisForceParam HitForceParam;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<ARadialForceActor*> HitForces;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<APolarisRadialForceActor*> HitForcesPolaris;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<UNiagaraSystem*> HitEffects;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     int32 HitInterval;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> HitEffectHandles;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<APolarisStageGimmickBaseActor*> HitSAnimationGimmicks;
     
-    UPROPERTY(BlueprintAssignable, Category = "StageGround")
+    UPROPERTY(BlueprintAssignable)
     FPolarisGroundHitSignature OnHitEventDispather;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<APolarisStageGimmickDeformControlActor*> StageGimmick_DeformControls;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     FPolarisForceParam BreakForceParam;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<UNiagaraSystem*> DamageEffects;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> DamageEffectHandles;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<UNiagaraSystem*> FractureEffects;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> FractureEffectHandles;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     float DecalRegionW;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     APolarisDecalActor* HitDecal;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     APolarisDecalActor* HitDecal2;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     APolarisDecalActor* HitDecal3;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<APolarisDecalActor*> HitDecals;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     APolarisDecalActor* BreakDecal;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     APolarisDecalActor* BreakDecal2;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     APolarisDecalActor* BreakDecal3;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<APolarisDecalActor*> BreakDecals;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     APolarisDecalActor* BreakDecal_Crack;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<UNiagaraSystem*> BreakLevelEffects;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<FPolarisStageNiagaraSystemArray> BreakLevelEffectsWorld;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<FLevelEffectWorldActorParam> BreakLevelEffectWorldActor;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> BreakLevelEffectHandles;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<APolarisGroundResetPoint*> GroundResetPoints;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     APolarisGroundResetPoint* BalconyMidResetPoint;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     UAkAudioEvent* BreakSound;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<FPolarisStageLevelSequence> BreakLevelSequences;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     FPolarisStageLevelSequence GroundControllLevelSequence;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<FVector2D> GroundControllLevelSequenceFrameList;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     TArray<FPolarisStageChangePhysicalMaterial> ChangePhysicalMaterials;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGround")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
     FPolarisStageLevelSequence FractureLevelSequence;
     
     APolarisStageGroundActor(const FObjectInitializer& ObjectInitializer);
 
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void UpdateStageSequenceVisibility(int32 StageSequenceId, bool is_hidden, bool is_update_gimmick);
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void SetVisible(bool Status);
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void SetCollisionEnable(bool Status);
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void OnStopBehavior();
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void OnReset();
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void OnInit();
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void OnHitS(const FVector& hit_pos, float Damage);
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void onHit(const FVector& hit_pos, float Damage);
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void OnFracture();
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void OnDamageBreakable(const FVector& hit_pos, float Damage, float total_damage);
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void OnBreak(const FVector& hit_pos, float Damage, float total_damage);
     
-    UFUNCTION(BlueprintPure, Category = "StageGround")
+    UFUNCTION(BlueprintPure)
     bool IsWall() const;
     
-    UFUNCTION(BlueprintPure, Category = "StageGround")
+    UFUNCTION(BlueprintPure)
     bool IsBreakable() const;
     
-    UFUNCTION(BlueprintPure, Category = "StageGround")
+    UFUNCTION(BlueprintPure)
     int32 GetWallDamageId() const;
     
-    UFUNCTION(BlueprintPure, Category = "StageGround")
+    UFUNCTION(BlueprintPure)
     int32 GetMaxHitPoint() const;
     
-    UFUNCTION(BlueprintPure, Category = "StageGround")
+    UFUNCTION(BlueprintPure)
     int32 GetHitPoint() const;
     
-    UFUNCTION(BlueprintPure, Category = "StageGround")
+    UFUNCTION(BlueprintPure)
     int32 GetDestructLevel() const;
     
-    UFUNCTION(BlueprintCallable, Category = "StageGround")
+    UFUNCTION(BlueprintCallable)
     void ChangeDestructLevel(int32 Level, EStageBreakType stageBreakType);
     
 };
