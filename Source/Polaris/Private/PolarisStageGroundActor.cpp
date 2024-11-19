@@ -28,10 +28,11 @@ APolarisStageGroundActor::APolarisStageGroundActor(const FObjectInitializer& Obj
     this->BreakSound = NULL;
     this->HitCollision->SetupAttachment(RootComponent);
 
+    
     UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(GetRootComponent());
-    const ConstructorHelpers::FObjectFinder<UStaticMesh> MeshObj(TEXT("/Script/Engine.StaticMesh'/Game/Stage/Common/Components/SM_CommonBox.SM_CommonBox'"));
+    const ConstructorHelpers::FObjectFinder<UStaticMesh> MeshObj(TEXT("/Script/Engine.StaticMesh'/Game/Stage/Common/Component/SM_CommonBox.SM_CommonBox'"));
 
-    const ConstructorHelpers::FObjectFinder<UMaterial> MeshMat(TEXT("/Script/Engine.Material'/Game/Stage/Common/Components/M_Collision.M_Collision'"));
+    const ConstructorHelpers::FObjectFinder<UMaterial> MeshMat(TEXT("/Script/Engine.Material'/Game/Stage/Common/Component/M_Collision.M_Collision'"));
 
     if (StaticMeshComponent && MeshObj.Object)
     {
