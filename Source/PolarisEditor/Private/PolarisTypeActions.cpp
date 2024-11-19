@@ -12,6 +12,7 @@
 #include "CustomizeSet.h"
 #include "EffectCharacterItem.h"
 #include "ItemPrefab.h"
+#include "WindSourceAsset.h"
 
 // AURA CHARACTER ITEM
 

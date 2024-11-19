@@ -4,6 +4,7 @@
 #include "SDockTab.h"
 #include "STextBlock.h"
 #include "ToolMenus.h"
+#include "WindTypeActions.h"
 
 IMPLEMENT_MODULE(FPolarisGameEditor, PolarisGameEditor)
 
@@ -28,6 +29,8 @@ void FPolarisGameEditor::StartupModule()
 	RegisterAssetTypeAction(AssetTools, MakeShareable(new FItemPrefabActions(PolarisGameAssetCategoryBit)));
 
 	RegisterAssetTypeAction(AssetTools, MakeShareable(new FPhoenixDynamicBoneBinaryActions(PolarisGameAssetCategoryBit)));
+
+	RegisterAssetTypeAction(AssetTools, MakeShareable(new FWindSourceActions(PolarisGameAssetCategoryBit)));
 }
 
 void FPolarisGameEditor::ShutdownModule()
