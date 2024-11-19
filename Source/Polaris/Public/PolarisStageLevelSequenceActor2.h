@@ -15,22 +15,22 @@ UCLASS()
 class POLARIS_API APolarisStageLevelSequenceActor2 : public AActor, public IPolarisReducibleInterface {
     GENERATED_BODY()
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageLevelSequence")
     ULevelSequence* LevelSequenceHardRef;
     
-    UPROPERTY(BlueprintReadOnly, EditAnywhere)
+    UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "StageLevelSequence")
     FMovieSceneSequencePlaybackSettings PlaybackSettings;
     
-    UPROPERTY(BlueprintReadWrite)
+    UPROPERTY(BlueprintReadWrite, Category = "StageLevelSequence")
     ULevelSequencePlayer* SequencePlayer;
     
-    UPROPERTY(BlueprintReadWrite)
+    UPROPERTY(BlueprintReadWrite, Category = "StageLevelSequence")
     ALevelSequenceActor* SequenceActor;
     
-    UPROPERTY(BlueprintReadOnly, EditAnywhere)
+    UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "StageLevelSequence")
     FGameplayTagContainer ReductionTagContainer;
     
-    UPROPERTY(BlueprintReadOnly)
+    UPROPERTY(BlueprintReadOnly, Category = "StageLevelSequence")
     FGameplayTagQuery ReductionTagQuery;
     
     APolarisStageLevelSequenceActor2(const FObjectInitializer& ObjectInitializer);

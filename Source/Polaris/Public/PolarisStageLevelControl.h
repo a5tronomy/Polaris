@@ -18,42 +18,42 @@ UCLASS()
 class POLARIS_API APolarisStageLevelControl : public AActor, public IPolarisReducibleInterface {
     GENERATED_BODY()
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LevelControl")
     TMap<EGeneralBattleEvent, FStageLevelSequence> BattleEventLevelSequence;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LevelControl")
     FStageBattleDramaData StageRound1LevelSequence;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LevelControl")
     FStageDestruction StageDestruction;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LevelControl")
     FStagePrestart StagePrestart;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LevelControl")
     TArray<ULevelSequence*> ResidentLevelSequence;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LevelControl")
     FStageLevelSequence ResetStageLevelSequence;
     
-    UPROPERTY(BlueprintReadOnly)
+    UPROPERTY(BlueprintReadOnly, Category = "LevelControl")
     FGameplayTagQuery ReductionTagQuery;
     
     APolarisStageLevelControl(const FObjectInitializer& ObjectInitializer);
 
-    UFUNCTION(BlueprintImplementableEvent)
+    UFUNCTION(BlueprintImplementableEvent, Category = "LevelControl")
     void StopBattleEventLevelSequence();
     
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable, Category = "LevelControl")
     void SetResetStageLevelSequencePlayer(TArray<ULevelSequencePlayer*> LevelSequencePlayer, TArray<ALevelSequenceActor*> LevelSequenceActor);
     
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable, Category = "LevelControl")
     void SetOnceStatus(EGeneralBattleEvent Type, bool flag);
     
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable, Category = "LevelControl")
     void SetLevelSequencePlayer(EGeneralBattleEvent Type, TArray<ULevelSequencePlayer*> LevelSequencePlayer, TArray<ALevelSequenceActor*> LevelSequenceActor);
     
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable, Category = "LevelControl")
     void KeyOnEventForSequencer(EGeneralBattleEvent Type, int32 LevelSeqArrayNum);
     
 

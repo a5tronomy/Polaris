@@ -29,160 +29,160 @@ UCLASS(Abstract)
 class POLARIS_API APolarisStageGimmickActor : public APolarisStageGimmickBaseActor {
     GENERATED_BODY()
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     int32 IsTouchBreak;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsPlayerDamageBrakeFlag;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsPlayerDownBrakeFlag;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsHitBreakFlag;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsPhysicsAutoAttackFlag;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsStartPhysicsMeshFlag;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     FVector2D PhysicsAutoAttackCheckVelocity;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float DamageImpluseStrengthMul;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float TouchImpluseStrength;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     ARadialForceActor* DestrictibleForce;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     APolarisRadialForceActor* DestrictibleForcePolaris;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     TArray<AActor*> HitInvisibleActors;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float HitInvisibleImpuleseThreshold;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     UNiagaraSystem* DestrictibleNiagaraRBDAsset;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     UStaticMesh* DestrictibleStaticMeshAssset;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool DestrictibleEnableHardSleeping;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsDestrictibleWallBarrier;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     FVector DestrictibleWallBarrierFacadeVector;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     FVector DestructibleForceOffset;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float DestructibleForceRadius;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float DestructibleForceStrength;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsDispDestructibleForce;
     
-    UPROPERTY(BlueprintReadWrite, Instanced)
+    UPROPERTY(BlueprintReadWrite, Instanced, Category = "StageGimmick")
     TArray<UPolarisStageAttackSphereComponent*> AttackArray;
     
-    UPROPERTY(BlueprintReadWrite, Instanced)
+    UPROPERTY(BlueprintReadWrite, Instanced, Category = "StageGimmick")
     UPrimitiveComponent* Volume;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     APolarisStageWallActor* BattleSpaceWallActor;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsVanish;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsVanishWait;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float VanishingStartSecond;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float VanishingEndSecond;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmick")
     bool IsVanishingDisableBarrier;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     bool IsNoFadeoutDestructible;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmick")
     TArray<FPolarisStageGimmickHitEffect> ReactEffectArray;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> ReactEffectHandles;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmick")
     TArray<UNiagaraSystem*> HitEffects;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> HitEffectHandles;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmick")
     TArray<UNiagaraSystem*> HitEffectsOnMesh;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> HitEffectOnMeshHandles;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmick")
     TArray<FPolarisStageSpawnEffect> HitEffectsOnMeshOffset;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> HitEffectOnMeshOffsetHandles;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmick")
     UAkAudioEvent* HitSound;
     
     UPROPERTY()
     TArray<uint32> HitSoundPlayHandle;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     UAkAudioEvent* ImpacterAudioEvent;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float ImpacterExtraMassValue;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float ImpacterExtraVelocityValue;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float ImpacterForceThreshold;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float ImpacterMassThreshold;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     int32 ImpacterNoMultiPlayFrame;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmick")
     float RevaivalWaitSecond;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmick")
     float DeformWeightDamageMul;
     
-    UPROPERTY(VisibleAnywhere)
+    UPROPERTY(VisibleAnywhere, Category = "StageGimmick")
     TArray<APolarisDestructibleNiagaraActor*> PolarisDestructibleNiagaraActors;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmick")
     TSubclassOf<APolarisDestructibleNiagaraActor> DestructibleNiagaraActorClass;
     
-    UPROPERTY(VisibleAnywhere)
+    UPROPERTY(VisibleAnywhere, Category = "StageGimmick")
     TArray<APolarisStagePhysicsActor*> PolarisDestructibleStaticMeshActors;
     
     APolarisStageGimmickActor(const FObjectInitializer& ObjectInitializer);
@@ -201,7 +201,7 @@ protected:
     void OnAttackHitEvent(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
     
 public:
-    UFUNCTION(BlueprintPure)
+    UFUNCTION(BlueprintPure, Category = "StageGimmick")
     UMeshComponent* GetMeshComponent() const;
     
 private:

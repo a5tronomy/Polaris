@@ -22,34 +22,34 @@ class POLARIS_API APolarisStageGimmickSkeletalMeshActor : public APolarisStageGi
     GENERATED_BODY()
 public:
 protected:
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     UStaticMeshComponent* DefaultMeshComponent;
     
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     USkeletalMeshComponent* SkeletalMeshComponent;
     
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     UStaticMeshComponent* BrokenMeshComponent;
     
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<USkeletalMeshComponent*> SkeletalMeshComponents;
     
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<ULightComponent*> LightComponents;
     
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<UFXSystemComponent*> FXSystemComponents;
     
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<UPolarisColorBlendComponent*> PolarisColorBlendComponents;
     
-    UPROPERTY(EditAnywhere, Instanced)
+    UPROPERTY(EditAnywhere, Instanced, Category = "StageGimmickSkeletalMesh")
     UPolarisMeshDeformComponent* PolarisMeshDeformComponent;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<FPolarisMeshDeformParamArray> DeformParams;
     
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<UStaticMeshComponent*> DecalMeshs;
     
     UPROPERTY(Instanced)
@@ -58,59 +58,59 @@ protected:
     UPROPERTY(Instanced)
     UStaticMeshComponent* DecalMesh_Broken;
     
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<UDecalComponent*> Decals;
     
     UPROPERTY(Instanced)
     UDecalComponent* decal;
     
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<FPolarisStageGimmickReaction> ReactionTable;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickSkeletalMesh")
     bool IsDeform;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickSkeletalMesh")
     bool IsAlwaysHitReaction;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickSkeletalMesh")
     int32 HitInterval;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "StageGimmickSkeletalMesh")
     bool NoPriorityCancel;
     
-    UPROPERTY(BlueprintReadOnly)
+    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
     EPolarisStageGimmickBreakPattern BreakPattern;
     
-    UPROPERTY(BlueprintReadOnly)
+    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
     EPolarisStageGimmickBreakPattern BreakPattern2nd;
     
-    UPROPERTY(BlueprintReadOnly)
+    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
     bool IsBreakPattern2nd;
     
-    UPROPERTY(BlueprintReadOnly)
+    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
     TArray<UAnimationAsset*> AnimationAsset2nd;
     
-    UPROPERTY(BlueprintReadWrite)
+    UPROPERTY(BlueprintReadWrite, Category = "StageGimmickSkeletalMesh")
     int32 BreakLevel;
     
-    UPROPERTY(VisibleInstanceOnly)
+    UPROPERTY(VisibleInstanceOnly, Category = "StageGimmickSkeletalMesh")
     int32 VisibleSkeletalMeshFlag;
     
-    UPROPERTY(VisibleInstanceOnly)
+    UPROPERTY(VisibleInstanceOnly, Category = "StageGimmickSkeletalMesh")
     int32 VisibleLightFlag;
     
-    UPROPERTY(VisibleInstanceOnly)
+    UPROPERTY(VisibleInstanceOnly, Category = "StageGimmickSkeletalMesh")
     int32 VisibleEffectFlag;
     
-    UPROPERTY(BlueprintReadOnly)
+    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
     EPolarisStageGimmickBreakPattern CurrentBreakPattern;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<TSoftObjectPtr<APolarisMobAnimal>> MobAnimalSlot;
     
-    UPROPERTY(Export, VisibleAnywhere)
+    UPROPERTY(Export, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
     TArray<TWeakObjectPtr<UNiagaraComponent>> ReactHitEffectInstances;
     
     UPROPERTY()
