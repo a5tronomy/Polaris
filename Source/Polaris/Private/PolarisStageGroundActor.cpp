@@ -37,6 +37,7 @@ APolarisStageGroundActor::APolarisStageGroundActor(const FObjectInitializer& Obj
     {
         StaticMeshComponent->SetStaticMesh(MeshObj.Object);
         StaticMeshComponent->SetMaterial(0, MeshMat.Object);
+        StaticMeshComponent->SetHiddenInGame(true);
     }
 }
 
