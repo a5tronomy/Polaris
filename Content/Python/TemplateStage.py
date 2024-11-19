@@ -4,14 +4,7 @@ import os
 import re
 
 files_to_template = [
-    "ST03_Effect_1a",
-    "ST03_Geom_1a",
     "ST03_Geom_Base_1",
-    "ST03_Light_3",
-    "ST03_Mob_1",
-    "ST03_Program",
-    "ST03_Sound",
-    "ST03_StageEffect_1a"
 ]
 
 additional_name_suffix = "Python"
@@ -570,39 +563,18 @@ def parse_player_starts(data) :
 def parse_volume_collisions(data) :
     """Handles the placement of Player Starts."""
     additional_properties = {
-        "StageSequenceId": 0,
-        "StageBrokenHistory": 0,
-        "FloorId": 0,
     }
 
-    polaris_player_starts = extract_properties_from_list(data, "PolarisBattlePlayerStart", additional_properties)
+    polaris_volume_collisions = extract_properties_from_list(data, "BP_VolumeCollision_C", additional_properties)
 
-    if len(polaris_player_starts) <= 0:
+    if len(polaris_volume_collisions) <= 0:
         return
 
-    add_transforms_to_actor_list(data, "CapsuleComponent", polaris_player_starts)
+    add_transforms_to_actor_list(data, "SceneComponent", polaris_volume_collisions)
 
-    for new_object, properties in polaris_player_starts.items():
-        spawned_actor = create_object(new_object, properties, additional_properties, "Stages/Starts", "/Script/Polaris.PolarisBattlePlayerStart")
-        if spawned_actor:
-            stage_light = properties.get("StageLightType")
-            formatted_light = format_enum(stage_light, unreal.StageLightType)
+    for new_object, properties in polaris_volume_collisions.items():
+        spawned_actor = create_object(new_object, properties, additional_properties, "Stages/Extra/Volumes", "/Game/Stage/Common/Blueprints/BP_VolumeCollision.BP_VolumeCollision")
 
-            unreal.log(f"Formatted string from {stage_light} to {formatted_light}")
-
-            spawned_actor.set_editor_property("StageLightType", formatted_light)
-
-            position_type_id = properties.get("StagePositionTypeId")
-            formatted_position_type_id = format_enum(position_type_id, unreal.StagePositionTypeId)
-
-            unreal.log(f"Formatted string from {position_type_id} to {formatted_position_type_id}")
-
-            spawned_actor.set_editor_property("StagePositionTypeId", formatted_position_type_id)
-
-
-def parse_extra(data):
-    # Parses some extra actors.
-    quick_parse_asset(par)
 
 def format_enum(input_string, enum_type):
     # Step 1: Extract the part after "EStageLightType::"
@@ -677,9 +649,10 @@ def main():
                 slow_task.enter_progress_frame(1, f"Parsing Barriers from {map_name}")
                 parse_barriers(stage_data)
 
-                unreal.log("Beginning Parsing of Player Starts...")
+                unreal.log("Beginning Parsing of Extras...")
                 slow_task.enter_progress_frame(1, f"Parsing Player Start from {map_name}")
                 parse_player_starts(stage_data)
+                parse_volume_collisions(stage_data)
 
                 unreal.log(f"finished parsing {map_name}.")
 
