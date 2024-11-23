@@ -7,7 +7,7 @@ USTRUCT(BlueprintType)
 struct FPolarisStageNiagaraSystemArray {
     GENERATED_BODY()
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageNiagaraSystemArray")
     TArray<FPolarisStageNiagaraSystem> Effects;
     
     POLARIS_API FPolarisStageNiagaraSystemArray();

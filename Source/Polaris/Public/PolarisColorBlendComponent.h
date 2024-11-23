@@ -13,30 +13,30 @@ public:
     UPROPERTY(Export)
     TWeakObjectPtr<UPrimitiveComponent> Target;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "Polaris|ColorBlendComponent")
     bool IsParentComponent;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "Polaris|ColorBlendComponent")
     FVector4 startColor;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "Polaris|ColorBlendComponent")
     FVector4 endColor;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "Polaris|ColorBlendComponent")
     float delaySecond;
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "Polaris|ColorBlendComponent")
     float endSecond;
     
     UPolarisColorBlendComponent(const FObjectInitializer& ObjectInitializer);
 
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable, Category = "Polaris|ColorBlendComponent")
     void PlayEX(UPrimitiveComponent* NewTarget, float NewDelaySecond, float NewEndSecond, FVector4 NewStartColor, FVector4 NewEndColor);
     
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable, Category = "Polaris|ColorBlendComponent")
     void Play();
     
-    UFUNCTION(BlueprintPure)
+    UFUNCTION(BlueprintPure, Category = "Polaris|ColorBlendComponent")
     bool IsFinish() const;
     
 };

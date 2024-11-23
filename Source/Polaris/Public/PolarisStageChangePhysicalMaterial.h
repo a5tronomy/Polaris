@@ -10,16 +10,16 @@ USTRUCT(BlueprintType)
 struct FPolarisStageChangePhysicalMaterial {
     GENERATED_BODY()
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageChangePhysicalMaterial")
     UPhysicalMaterial* DefaultMaterial;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageChangePhysicalMaterial")
     TArray<UPhysicalMaterial*> BreakLevelMaterial;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageChangePhysicalMaterial")
     TArray<AStaticMeshActor*> TargetStaticMeshActor;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageChangePhysicalMaterial")
     TArray<ASkeletalMeshActor*> TargetSkeletalMeshActor;
     
     POLARIS_API FPolarisStageChangePhysicalMaterial();

@@ -23,66 +23,66 @@ UCLASS()
 class POLARIS_API APolarisStageGimmickDeformControlActor : public APolarisStageGimmickBaseActor {
     GENERATED_BODY()
 public:
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickDeformControl")
     UBoxComponent* BoxCollisionComponent;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     bool IsTakeDamage;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     TArray<FPolarisStageGimmicDeformMesh> MeshArray;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> MeshEffectHandles;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     TArray<FPolarisStageGimmicDeformGimmikMesh> GimmickArray;
     
     UPROPERTY(Export)
     TArray<TWeakObjectPtr<UNiagaraComponent>> GimmickEffectHandles;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     TArray<AStaticMeshActor*> FloorDecalMeshes;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     TArray<APolarisStageGimmickActor*> StartPhysicsMeshs;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     float DestructDelayMaxTime;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     float WeightDamageMul;
     
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickDeformControl")
     TArray<UPolarisColorBlendComponent*> PolarisColorBlendComponents;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     bool IsVanish;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     float VanishingStartSecond;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     float VanishingEndSecond;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     bool IsVanishingDisableBarrier;
     
     UPROPERTY()
     int32 LastImpulseStrengthType;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickDeformControl")
     TSubclassOf<APolarisDestructibleNiagaraActor> DestructibleNiagaraActorClass;
     
-    UPROPERTY(VisibleAnywhere, Category = "StageGimmickDeformControl")
+    UPROPERTY(VisibleAnywhere, Category = "Polaris|StageGimmickDeformControl")
     TArray<APolarisDestructibleNiagaraActor*> PolarisDestructibleNiagaraActors;
     
     APolarisStageGimmickDeformControlActor(const FObjectInitializer& ObjectInitializer);
 
-    UFUNCTION()
+    UFUNCTION(Category = "Polaris|StageGimmickDeformControl")
     void OnTakeRadialDamageEvent(AActor* DamagedActor, float Damage, const UDamageType* DamageType, FVector Origin, const FHitResult& HitInfo, AController* InstigatedBy, AActor* DamageCauser);
     
-    UFUNCTION()
+    UFUNCTION(Category = "Polaris|StageGimmickDeformControl")
     void OnTakePointDamageEvent(AActor* DamagedActor, float Damage, AController* InstigatedBy, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector ShotFromDirection, const UDamageType* DamageType, AActor* DamageCauser);
     
 };

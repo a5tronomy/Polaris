@@ -10,13 +10,13 @@ USTRUCT(BlueprintType)
 struct FPolarisStageHitAnimationMesh {
     GENERATED_BODY()
 public:
-    UPROPERTY(BlueprintReadOnly, EditAnywhere)
+    UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "StageHitAnimationMesh")
     AStaticMeshActor* DefaultMesh;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageHitAnimationMesh")
     ASkeletalMeshActor* Mesh;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageHitAnimationMesh")
     TArray<FPolarisStageGimmickAnimationSet> HitAnimationSet;
     
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere)

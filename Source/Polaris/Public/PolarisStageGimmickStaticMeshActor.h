@@ -10,7 +10,7 @@ class POLARIS_API APolarisStageGimmickStaticMeshActor : public APolarisStageGimm
     GENERATED_BODY()
 public:
 private:
-    UPROPERTY(Instanced, VisibleAnywhere)
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickStaticMesh")
     UStaticMeshComponent* StaticMeshComponent;
     
 public:

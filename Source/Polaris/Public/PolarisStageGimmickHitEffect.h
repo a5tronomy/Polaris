@@ -8,7 +8,7 @@ USTRUCT(BlueprintType)
 struct FPolarisStageGimmickHitEffect {
     GENERATED_BODY()
 public:
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickHitEffect")
     UNiagaraSystem* EffectAsset;
     
     POLARIS_API FPolarisStageGimmickHitEffect();

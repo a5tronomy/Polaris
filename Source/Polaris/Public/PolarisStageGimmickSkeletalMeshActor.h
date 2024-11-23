@@ -22,34 +22,34 @@ class POLARIS_API APolarisStageGimmickSkeletalMeshActor : public APolarisStageGi
     GENERATED_BODY()
 public:
 protected:
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     UStaticMeshComponent* DefaultMeshComponent;
     
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     USkeletalMeshComponent* SkeletalMeshComponent;
     
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     UStaticMeshComponent* BrokenMeshComponent;
     
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<USkeletalMeshComponent*> SkeletalMeshComponents;
     
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<ULightComponent*> LightComponents;
     
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<UFXSystemComponent*> FXSystemComponents;
     
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<UPolarisColorBlendComponent*> PolarisColorBlendComponents;
     
-    UPROPERTY(EditAnywhere, Instanced, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(EditAnywhere, Instanced, Category = "Polaris|StageGimmickSkeletalMesh")
     UPolarisMeshDeformComponent* PolarisMeshDeformComponent;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<FPolarisMeshDeformParamArray> DeformParams;
     
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<UStaticMeshComponent*> DecalMeshs;
     
     UPROPERTY(Instanced)
@@ -58,59 +58,59 @@ protected:
     UPROPERTY(Instanced)
     UStaticMeshComponent* DecalMesh_Broken;
     
-    UPROPERTY(Instanced, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Instanced, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<UDecalComponent*> Decals;
     
     UPROPERTY(Instanced)
     UDecalComponent* decal;
     
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<FPolarisStageGimmickReaction> ReactionTable;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     bool IsDeform;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     bool IsAlwaysHitReaction;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     int32 HitInterval;
     
-    UPROPERTY(EditAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(EditAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     bool NoPriorityCancel;
     
-    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadOnly, Category = "Polaris|StageGimmickSkeletalMesh")
     EPolarisStageGimmickBreakPattern BreakPattern;
     
-    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadOnly, Category = "Polaris|StageGimmickSkeletalMesh")
     EPolarisStageGimmickBreakPattern BreakPattern2nd;
     
-    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadOnly, Category = "Polaris|StageGimmickSkeletalMesh")
     bool IsBreakPattern2nd;
     
-    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadOnly, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<UAnimationAsset*> AnimationAsset2nd;
     
-    UPROPERTY(BlueprintReadWrite, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadWrite, Category = "Polaris|StageGimmickSkeletalMesh")
     int32 BreakLevel;
     
-    UPROPERTY(VisibleInstanceOnly, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(VisibleInstanceOnly, Category = "Polaris|StageGimmickSkeletalMesh")
     int32 VisibleSkeletalMeshFlag;
     
-    UPROPERTY(VisibleInstanceOnly, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(VisibleInstanceOnly, Category = "Polaris|StageGimmickSkeletalMesh")
     int32 VisibleLightFlag;
     
-    UPROPERTY(VisibleInstanceOnly, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(VisibleInstanceOnly, Category = "Polaris|StageGimmickSkeletalMesh")
     int32 VisibleEffectFlag;
     
-    UPROPERTY(BlueprintReadOnly, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadOnly, Category = "Polaris|StageGimmickSkeletalMesh")
     EPolarisStageGimmickBreakPattern CurrentBreakPattern;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<TSoftObjectPtr<APolarisMobAnimal>> MobAnimalSlot;
     
-    UPROPERTY(Export, VisibleAnywhere, Category = "StageGimmickSkeletalMesh")
+    UPROPERTY(Export, VisibleAnywhere, Category = "Polaris|StageGimmickSkeletalMesh")
     TArray<TWeakObjectPtr<UNiagaraComponent>> ReactHitEffectInstances;
     
     UPROPERTY()
