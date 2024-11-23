@@ -1,5 +1,6 @@
 .idea/
 .vsconfig
+.Platforms/
 
 # Visual Studio user specific files
 .vs/
